@@ -1,0 +1,35 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    padding: auto;
+    justify-content: center;
+}
+
+.matrix-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  grid-template-rows: 1fr 1fr;    /* Two equal rows */
+  gap: 10px;
+  height: 90vh;
+}
+
+.quadrant-box {
+  border: 2px solid #333;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.task-form {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f4f4f4;
+  border-radius: 8px;
+}
+
+.task-form input[type="text"] {
+  flex-grow: 1;
+  padding: 8px;
+}
