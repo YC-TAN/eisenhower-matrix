@@ -14,7 +14,6 @@ const TaskForm = ({ onAdd }) => {
       task,
       important,
       urgent,
-      completed: false,
     });
 
     // Reset form
