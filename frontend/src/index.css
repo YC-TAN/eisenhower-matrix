@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+/* ─── Quadrant color tokens ─────────────────────────────────── */
+:root {
+  /* Q1 — Do First (Amber) */
+  --color-q1-bg:     #fff1f2cc;
+  --color-q1-border: #fecdd3;
+  --color-q1-text:   #4c0519;
+  --color-q1-badge:  #F59E0B;
+
+  /* Q2 — Schedule (Blue) */
+  --color-q2-bg:     #f0f9ffcc;
+  --color-q2-border: #bae6fd;
+  --color-q2-text:   #0c4a6e;
+  --color-q2-badge:  #3B82F6;
+
+  /* Q3 — Delegate (Purple) */
+  --color-q3-bg:     #fffbebcc;
+  --color-q3-border: #fde68a;
+  --color-q3-text:   #78350f;
+  --color-q3-badge:  #8B5CF6;
+
+  /* Q4 — Eliminate (Gray) */
+  --color-q4-bg:     #f8fafccc;
+  --color-q4-border: #e2e8f0;
+  --color-q4-text:   #0f172a;
+  --color-q4-badge:  #94A3B8;
+
+  /* App-wide neutrals */
+  --color-bg-page:       #F8FAFC;
+  --color-bg-card:       #FFFFFF;
+  --color-border-subtle: #E2E8F0;
+  --color-text-primary:  #0F172A;
+  --color-text-muted:    #64748B;
+  --color-text-hint:     #94A3B8;
+
+  /* Feedback */
+  --color-success:       #10B981;
+  --color-danger:        #EF4444;
+  --color-danger-hover:  #FEE2E2;
+
+  /* Layout */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  14px;
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:  0 4px 12px rgba(0,0,0,0.08);
+
+  /* Typography */
+  --font-sans: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+/* ─── Reset & base ───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-sans);
+  /* background-image: linear-gradient(to bottom right, #f9fafb, #f3f4f6); */
+  background: var(--color-bg-page);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+/* ─── App shell ──────────────────────────────────────────────── */
+.app-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
