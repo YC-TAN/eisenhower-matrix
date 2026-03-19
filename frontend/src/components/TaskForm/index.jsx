@@ -1,23 +1,26 @@
 import { useState } from "react";
-import './TaskForm.css'
 
-const TaskForm = ({ onAdd }) => {
-  const [task, setTask] = useState("");
+import { useTaskContext } from '../../context/UseTaskContext'
+import "./TaskForm.css";
+
+const TaskForm = () => {
+  const { addTask } = useTaskContext();
+  const [text, setText] = useState("");
   const [important, setImportant] = useState(false);
   const [urgent, setUrgent] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!task.trim()) return; // Don't add empty tasks
+    if (!text.trim()) return; // Don't add empty tasks
 
-    onAdd({
-      task,
+    addTask({
+      text,
       important,
       urgent,
     });
 
     // Reset form
-    setTask("");
+    setText("");
     setImportant(false);
     setUrgent(false);
   };
@@ -28,9 +31,9 @@ const TaskForm = ({ onAdd }) => {
         <input
           type="text"
           placeholder="What needs to be done?"
-          value={task}
+          value={text}
           maxLength={200}
-          onChange={(e) => setTask(e.target.value)}
+          onChange={(e) => setText(e.target.value)}
         />
         <button type="submit" className="task-form-btn">
           Add
@@ -58,10 +61,14 @@ const TaskForm = ({ onAdd }) => {
 
         {(urgent || important) && (
           <span className="task-form-preview">
-            → {urgent && important ? 'Q1 · Do First' :
-               !urgent && important ? 'Q2 · Schedule' :
-               urgent && !important ? 'Q3 · Delegate' :
-               'Q4 · Eliminate'}
+            →{" "}
+            {urgent && important
+              ? "Q1 · Do First"
+              : !urgent && important
+                ? "Q2 · Schedule"
+                : urgent && !important
+                  ? "Q3 · Delegate"
+                  : "Q4 · Eliminate"}
           </span>
         )}
       </div>
