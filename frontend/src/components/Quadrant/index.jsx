@@ -33,8 +33,6 @@ const Quadrant = ({ config, tasks }) => {
             <TaskItem
               key={task.id}
               task={task}
-            //   onComplete={onComplete}
-            //   onDelete={onDelete}
             />
           ))}
         </ul>
