@@ -1,0 +1,26 @@
+{
+  "name": "todomatrixapp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A productivity-focused Todo application built with React, utilizing the Eisenhower Matrix to prioritize tasks by Urgency and Importance.",
+  "workspaces": [
+    "shared",
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YC-TAN/eisenhower-matrix.git"
+  },
+  "author": "YC-TAN",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YC-TAN/eisenhower-matrix/issues"
+  },
+  "homepage": "https://github.com/YC-TAN/eisenhower-matrix#readme"
+}
