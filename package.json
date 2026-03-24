@@ -6,7 +6,7 @@
   "workspaces": [
     "shared",
     "backend",
-    "frontend"
+    "frontendTS"
   ],
   "scripts": {
     "dev": "npm run dev --workspaces --if-present",
