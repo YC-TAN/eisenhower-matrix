@@ -1,10 +1,10 @@
-# 1. Dependency Folders (The biggest "no-go")
+# 1. Dependency Folders
 node_modules/
 dist/
 build/
 .cache/
 
-# 2. Environment Variables (CRITICAL: Never upload your secrets!)
+# 2. Environment Variables
 .env
 .env.local
 .env.development.local
