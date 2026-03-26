@@ -7,7 +7,10 @@ export const TaskStatus = z.enum(['pending', 'completed', 'deleted'])
 // -- Reusable fields --
 
 const idField = z.string().uuid({ message: 'Invalid ID format' })
-const taskTextField = z.string().min(4, { message: 'Task must be at least 4 characters long' })
+const taskTextField = z
+  .string()
+  .trim()
+  .min(4, { message: 'Task must be at least 4 characters long' })
 
 // -- Schemas --
 // User form input when creating a task
