@@ -1,5 +1,5 @@
 {
-  "name": "todomatrixapp",
+  "name": "todo-matrix",
   "version": "1.0.0",
   "private": true,
   "description": "A productivity-focused Todo application built with React, utilizing the Eisenhower Matrix to prioritize tasks by Urgency and Importance.",
@@ -9,9 +9,9 @@
     "frontendTS"
   ],
   "scripts": {
-    "dev": "npm run dev --workspaces --if-present",
-    "build": "npm run build --workspaces --if-present",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm run dev --workspace=shared & npm run dev --workspace=backend & npm run dev --workspace=frontendTS",
+    "build": "npm run build --workspace=shared && npm run build --workspace=backend && npm run build --workspace=frontendTS",
+    "start": "node backend/build/index.js"
   },
   "repository": {
     "type": "git",
