@@ -1,15 +1,16 @@
 import express from "express";
-import {env} from './config/env';
+import { env } from './config/env';
+import { logger } from "./utils/logger";
 
 const app = express();
 
 app.use(express.json());
 
 app.get('/', (_req, res) => {
-    console.log("Someone pinged !");
+    logger.info("Someone pinged !");
     res.send('Hello');
 });
 
 app.listen(env.PORT, () => {
-    console.log(`Server running on port ${env.PORT} in ${env.NODE_ENV} mode`);
+    logger.info(`Server running on port ${env.PORT} in ${env.NODE_ENV} mode`);
 });
