@@ -11,3 +11,6 @@ export const logger = {
     console.warn(`[${timestamp()}] WARN:`, ...params);
   },
 };
+
+export const toError = (error: unknown): Error =>
+  error instanceof Error ? error : new Error(String(error));
