@@ -2,16 +2,17 @@
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
-    "rootDir": "./src",
-    "outDir": "./build/",
-    "baseUrl": "..", 
+    "rootDir": "../",
+    "outDir": "./build",
+    "baseUrl": ".", 
     "paths": {
-      "@todo-matrix/shared": ["shared/src/index.ts"]
+      "@todo-matrix/shared": ["../shared/src/index.ts"]
     },
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "commonjs",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
     "target": "ES6",
     "types": ["node"],
     // For nodejs:
@@ -46,5 +47,6 @@
     // "skipLibCheck": true,
     "esModuleInterop": true
   },
-  "references": [{ "path": "../shared" }]
+   "include": ["src/**/*.ts"],
+  // "references": [{ "path": "../shared" }]
 }
