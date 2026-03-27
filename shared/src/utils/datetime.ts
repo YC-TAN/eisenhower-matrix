@@ -6,7 +6,8 @@ const CLOCK_DRIFT_BUFFER_MS = 10000
 
 export const nonFutureDatetime = z.string()
     .datetime({ message: 'Date must be a valid ISO datetime' })
+    .pipe(z.coerce.date()) // This converts the string TO a Date object
     .refine(
-      (val) => new Date(val) <= new Date(Date.now() + CLOCK_DRIFT_BUFFER_MS),
+      (date) => date <= new Date(Date.now() + CLOCK_DRIFT_BUFFER_MS),
       { message: 'Date cannot be in the future' }
     )
