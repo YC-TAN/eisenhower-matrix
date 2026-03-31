@@ -1,13 +1,13 @@
-const timestamp = () => new Date().toISOString();
+const timestamp = (): string => new Date().toISOString();
 
 export const logger = {
-  info: (...params: unknown[]) => {
+  info: (...params: unknown[]): void => {
     console.log(`[${timestamp()}] INFO:`, ...params);
   },
-  error: (...params: unknown[]) => {
+  error: (...params: unknown[]): void => {
     console.error(`[${timestamp()}] ERROR:`, ...params);
   },
-  warn: (...params: unknown[]) => {
+  warn: (...params: unknown[]): void => {
     console.warn(`[${timestamp()}] WARN:`, ...params);
   },
 };
