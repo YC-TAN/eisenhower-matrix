@@ -6,16 +6,16 @@ export const TaskStatusSchema = z.enum(['pending', 'completed', 'deleted'])
 
 // -- Fields --
 
-const _id = z.string().uuid({ message: 'Invalid ID format' })
+const _id = z.uuid({ error: 'Invalid ID format' })
 const text = z
   .string()
   .trim()
-  .min(4, { message: 'Task must be at least 4 characters long' })
+  .min(4, { error: 'Task must be at least 4 characters long' })
 const important = z.boolean()
 const urgent = z.boolean()
 
 // -- Schemas --
-// User form input when creating a task
+// (UI only) Form inputs when creating a task
 export const TaskInputSchema = z.object({
   text,
   important,
@@ -31,15 +31,28 @@ export const TaskSchema = TaskInputSchema.extend({
     updatedAt: nonFutureDatetime,
 });
 
-// User can only edit text — all other updates are internal operations
-export const UpdateTaskSchema = TaskSchema.pick({
+// (UI only) User can only edit text — all other updates are internal operations
+export const UpdateTaskTextSchema = TaskSchema.pick({
   _id: true,
   text: true,
   updatedAt: true,
 })
 
+export const UpdateTaskSchema = TaskSchema.omit({
+  _id: true,
+  createdAt: true,
+}).partial()
+
+export const TaskIdParamSchema = z.object({
+  id: TaskSchema.shape._id
+});
+
+
+
 // -- Types --
-export type TaskStatus = z.infer<typeof TaskStatusSchema>
-export type TaskInput = z.infer<typeof TaskInputSchema>
+export type TaskStatus = z.infer<typeof TaskStatusSchema>;
+export type TaskInput = z.infer<typeof TaskInputSchema>;
 export type Task = z.infer<typeof TaskSchema>;
-export type UpdateTaskInput = z.infer<typeof UpdateTaskSchema>;
+export type UpdateTaskInput = z.infer<typeof UpdateTaskTextSchema>;
+export type UpdateTask = z.infer<typeof UpdateTaskSchema>;
+export type TaskIdParam = z.infer<typeof TaskIdParamSchema>;

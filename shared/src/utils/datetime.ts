@@ -4,9 +4,10 @@ import { z } from 'zod'
 // Important for offline-first sync where client timestamps may lag slightly.
 const CLOCK_DRIFT_BUFFER_MS = 10000
 
-export const nonFutureDatetime = z.string()
+export const nonFutureDatetime = z.iso
     .datetime({ message: 'Date must be a valid ISO datetime' })
-    .pipe(z.coerce.date()) // This converts the string TO a Date object
+    // Converts ISO strings to Date objects for Mongoose compatibility and type-safe date arithmetic.
+    .pipe(z.coerce.date())
     .refine(
       (date) => date <= new Date(Date.now() + CLOCK_DRIFT_BUFFER_MS),
       { message: 'Date cannot be in the future' }
