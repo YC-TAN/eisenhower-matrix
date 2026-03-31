@@ -1,4 +1,4 @@
-import { Model, UpdateQuery, QueryFilter } from 'mongoose';
+import { Model, QueryFilter } from 'mongoose';
 
 export class BaseRepository<T> {
   // Note: lean() bypasses virtuals, getters/setters and defaults
@@ -17,7 +17,7 @@ export class BaseRepository<T> {
     return this.model.create(data);
   }
 
-  async update(id: string, data: UpdateQuery<T>): Promise<T | null> {
+  async update<U extends Partial<T>>(id: string, data: U): Promise<T | null> {
     const doc = await this.model.findById(id);
     if (!doc) return null;
 
