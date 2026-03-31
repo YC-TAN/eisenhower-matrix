@@ -2,7 +2,8 @@ import { Schema, model } from 'mongoose';
 import { Task, TaskStatusSchema } from '@todo-matrix/shared';
 
 const TaskSchema = new Schema<Task>({
-  _id: { type: String, required: true, unique: true }, // UUID generated from frontend to support offline first architecture
+  // UUID will be generated at frontend to support offline
+  _id: { type: String, required: true, unique: true }, 
   text: { type: String, required: true, minlength: 4 },
   important: { type: Boolean, required: true },
   urgent: { type: Boolean, required: true },
