@@ -4,6 +4,10 @@ import { logger, toError } from "src/utils/logger";
 import { NotFoundError } from "../utils/errors";
 import { ErrorResponse } from "src/types/api";
 
+export const unknownEndpoint = (_req: Request, res: Response<ErrorResponse>) => {
+    res.status(404).send({ error: 'unknown endpoint' });
+};
+
 // For standarc JS errors without HTTP codes
 const isNativeError = (error: unknown): error is { name: string; message: string } =>
   typeof error === 'object' &&
