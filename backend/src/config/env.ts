@@ -1,8 +1,11 @@
-import { z } from 'zod';
 import dotenv from 'dotenv';
-import { logger } from '../utils/logger';
 
-dotenv.config();
+dotenv.config({ 
+  path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env' 
+});
+
+import { z } from 'zod';
+import { logger } from '../utils/logger';
 
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
