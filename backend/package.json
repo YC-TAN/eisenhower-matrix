@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc": "tsc",
+    "build": "tsc",
     "dev": "ts-node-dev src/index.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "start": "node build/index.js"
+    "start": "npm run build && node build/backend/src/index.js",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +19,7 @@
   "type": "commonjs",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.59.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/eslint__js": "^8.42.3",
     "@types/express": "^5.0.6",

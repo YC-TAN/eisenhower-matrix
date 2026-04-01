@@ -3,7 +3,7 @@ import { Task, TaskStatusSchema } from '@todo-matrix/shared';
 
 const TaskSchema = new Schema<Task>({
   // UUID will be generated at frontend to support offline
-  _id: { type: String, required: true, unique: true }, 
+  _id: { type: String, required: true }, 
   text: { type: String, required: true, minlength: 4 },
   important: { type: Boolean, required: true },
   urgent: { type: Boolean, required: true },

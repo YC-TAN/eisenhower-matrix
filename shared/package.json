@@ -2,10 +2,10 @@
   "name": "@todo-matrix/shared",
   "version": "1.0.0",
   "description": "Zod schemas, shared by frontend and backend",
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
   "types": "./src/index.ts",
   "scripts": {
-    "tsc": "tsc",
+    "build": "tsc",
     "dev": "tsc --watch"
   },
   "keywords": [],
