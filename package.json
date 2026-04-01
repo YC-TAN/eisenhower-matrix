@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "npm run dev --workspace=shared & npm run dev --workspace=backend & npm run dev --workspace=frontendTS",
     "build": "npm run build --workspace=shared && npm run build --workspace=backend && npm run build --workspace=frontendTS",
-    "start": "node backend/build/index.js"
+    "start": "npm run build && node build/backend/src/index.js"
   },
   "repository": {
     "type": "git",
