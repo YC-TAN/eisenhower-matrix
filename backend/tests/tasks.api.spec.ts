@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import TaskModel from '../src/models/taskModel';
 import { Task } from '@todo-matrix/shared';
 import { seedTasks, SeedTasks } from './helper';
+import { beforeEach } from 'node:test';
 
 test.describe('Task API', () => {
 
@@ -210,5 +211,110 @@ test.describe('Task API', () => {
             const res = await request.post(BASE_URL, { data: { ...newTask, updatedAt: future } });
             expect(res.status()).toBe(400);
         });
+    });
+
+    test.describe('PUT /api/tasks/:id', () => { 
+
+        test.beforeEach(async () => {
+            tasks = await seedTasks();
+        });
+
+        test.afterEach(async () => {
+            await TaskModel.deleteMany({});
+        });
+
+        test('should update text', async({request}) => {
+            const update = {
+                text: "update",
+                updatedAt: new Date(),
+            };
+
+            const res = await request.put(
+                `${BASE_URL}/${tasks.doFirst._id}`, 
+                {data: update}
+            );
+
+            await expect(res).toBeOK();
+            expect(res.status()).toBe(200);
+
+            const body = await res.json() as Task;
+            expect(body._id).toBe(tasks.doFirst._id);
+            expect(body.text).toBe(update.text);
+            expect(body.updatedAt).toBe(update.updatedAt.toISOString());
+            expect(body.important).toBe(tasks.doFirst.important);
+            expect(new Date(body.updatedAt).getTime()).toBeGreaterThan(
+                new Date(tasks.doFirst.updatedAt).getTime()
+            );
+        });
+
+        test('should update important', async ({ request }) => {
+            const update = { important: !tasks.doFirst.important, updatedAt: new Date() };
+            const res = await request.put(`${BASE_URL}/${tasks.doFirst._id}`, { data: update });
+            await expect(res).toBeOK();
+            const body = await res.json() as Task;
+            expect(body.important).toBe(update.important);
+        });
+
+        test('should update urgent', async ({ request }) => {
+            const update = { urgent: !tasks.doFirst.urgent, updatedAt: new Date() };
+            const res = await request.put(`${BASE_URL}/${tasks.doFirst._id}`, { data: update });
+            await expect(res).toBeOK();
+            const body = await res.json() as Task;
+            expect(body.urgent).toBe(update.urgent);
+        });
+
+        test('should update status', async ({ request }) => {
+            const update = { status: 'completed', updatedAt: new Date() };
+            const res = await request.put(`${BASE_URL}/${tasks.doFirst._id}`, { data: update });
+            await expect(res).toBeOK();
+            const body = await res.json() as Task;
+            expect(body.status).toBe(update.status);
+        });
+
+        test('should return 404 when id does not exist', async ({ request }) => {
+            const res = await request.put(
+                `${BASE_URL}/${crypto.randomUUID()}`, 
+                { data: { text: 'update', updatedAt: new Date() } }
+            );
+            expect(res.status()).toBe(404);
+        });
+
+        test('should return 400 when id is invalid', async ({ request }) => {
+            const res = await request.put(
+                `${BASE_URL}/${"invalid"}`, 
+                { data: { text: 'update', updatedAt: new Date() } }
+            );
+            expect(res.status()).toBe(400);
+        });
+
+        test('should return 400 when updatedAt is in the future', async ({ request }) => {
+            const future = new Date(Date.now() + 1000 * 60 * 60);
+            const res = await request.put(
+                `${BASE_URL}/${tasks.doFirst._id}`, 
+                { data: { text: 'update', updatedAt: future } }
+            );
+            expect(res.status()).toBe(400);
+        });
+
+        test('should return 400 when updatedAt is missing', async ({ request }) => {
+            const res = await request.put(
+                `${BASE_URL}/${tasks.doFirst._id}`, 
+                { data: { text: 'update' } }
+            );
+            expect(res.status()).toBe(400);
+        });
+
+        test('should return 400 when status is invalid', async ({ request }) => {
+            const update = { status: 'i am invalid', updatedAt: new Date() };
+            const res = await request.put(`${BASE_URL}/${tasks.doFirst._id}`, { data: update });
+            expect(res.status()).toBe(400);
+        });
+
+        test('should return 400 when text is too short', async ({ request }) => {
+            const update = { text: '123', updatedAt: new Date() };
+            const res = await request.put(`${BASE_URL}/${tasks.doFirst._id}`, { data: update });
+            expect(res.status()).toBe(400);
+        });
+
     });
 });
