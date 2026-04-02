@@ -41,13 +41,17 @@ export const UpdateTaskTextSchema = TaskSchema.pick({
 export const UpdateTaskSchema = TaskSchema.omit({
   _id: true,
   createdAt: true,
-}).partial()
+}).partial({
+  text: true,
+  important: true,
+  urgent: true,
+  status: true,
+  completedAt: true,
+})
 
 export const TaskIdParamSchema = z.object({
   id: TaskSchema.shape._id
 });
-
-
 
 // -- Types --
 export type TaskStatus = z.infer<typeof TaskStatusSchema>;
