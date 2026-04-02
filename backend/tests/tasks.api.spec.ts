@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 import TaskModel from '../src/models/taskModel';
 import { Task } from '@todo-matrix/shared';
-import { createTaskData, seedTasks, SeedTasks } from './helper';
+import { seedTasks, SeedTasks } from './helper';
 
 test.describe('Task API', () => {
 
@@ -111,14 +111,20 @@ test.describe('Task API', () => {
                 urgent: tasks.doFirst.urgent,
                 status: tasks.doFirst.status,
                 completedAt: tasks.doFirst.completedAt,
-                createdAt: tasks.doFirst.createdAt,
-                updatedAt: tasks.doFirst.updatedAt
+                createdAt: tasks.doFirst.createdAt.toISOString(),
+                updatedAt: tasks.doFirst.updatedAt.toISOString()
             });        
         });
 
         test('should return 404 for non-existent id', async ({ request }) => {
             const res = await request.get(`${BASE_URL}/${crypto.randomUUID()}`);
             expect(res.status()).toBe(404);
+        });
+
+        test('should return 400 when id is invalid', async({request}) => {
+            const invalidId = "invalid";
+            const res = await request.get(`${BASE_URL}/${invalidId}`);
+            expect(res.status()).toBe(400);
         });
     });
 });
