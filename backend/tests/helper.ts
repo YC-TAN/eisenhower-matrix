@@ -12,7 +12,7 @@ export function createTaskData(overrides: Partial<Task> = {}): Task {
   const now = new Date();
   return {
     _id: crypto.randomUUID(),
-    text: 'Buy milk',
+    text: 'new task',
     important: false,
     urgent: false,
     status: 'pending',
