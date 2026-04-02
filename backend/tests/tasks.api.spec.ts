@@ -3,8 +3,7 @@ import mongoose from 'mongoose';
 
 import TaskModel from '../src/models/taskModel';
 import { Task } from '@todo-matrix/shared';
-import { seedTasks, SeedTasks } from './helper';
-import { beforeEach } from 'node:test';
+import { seedTasks, SeedTasks, createTaskData } from './helper';
 
 test.describe('Task API', () => {
 
@@ -99,7 +98,7 @@ test.describe('Task API', () => {
             await TaskModel.deleteMany({});
         }); 
 
-        test('should return task by id', async ({ request }) => {
+        test('should return task with given id', async ({ request }) => {
             const res = await request.get(`${BASE_URL}/${tasks.doFirst._id}`);
             await expect(res).toBeOK();
             expect(res.status()).toBe(200);
@@ -117,12 +116,12 @@ test.describe('Task API', () => {
             });        
         });
 
-        test('should return 404 for non-existent id', async ({ request }) => {
+        test('should return 404 when id does not exist', async ({ request }) => {
             const res = await request.get(`${BASE_URL}/${crypto.randomUUID()}`);
             expect(res.status()).toBe(404);
         });
 
-        test('should return 400 for invalid id', async({request}) => {
+        test('should return 400 when id is invalid', async({request}) => {
             const invalidId = "invalid";
             const res = await request.get(`${BASE_URL}/${invalidId}`);
             expect(res.status()).toBe(400);
@@ -130,24 +129,11 @@ test.describe('Task API', () => {
     });
 
     test.describe('POST /api/tasks', () => {
-        test.afterAll(async () => {
-            await TaskModel.deleteMany({});
-        }); 
-
+        let newTask: Task;
         test.beforeEach(async () => {
             await TaskModel.deleteMany({});
+            newTask = createTaskData();
         });
-
-        const newTask = {
-            _id: crypto.randomUUID(),
-            text: "create new task",
-            important: true,
-            urgent: false,
-            status: 'pending',
-            completedAt: null,
-            createdAt: new Date(),
-            updatedAt: new Date()
-        };
 
         test('should create new task', async ({request}) => {
             const res = await request.post(BASE_URL, {data: newTask});
@@ -211,6 +197,12 @@ test.describe('Task API', () => {
             const res = await request.post(BASE_URL, { data: { ...newTask, updatedAt: future } });
             expect(res.status()).toBe(400);
         });
+
+        test('should return 409 when _id already exists', async ({ request }) => {
+            await request.post(BASE_URL, { data: newTask });
+            const res = await request.post(BASE_URL, { data: newTask });
+            expect(res.status()).toBe(409);
+        });
     });
 
     test.describe('PUT /api/tasks/:id', () => { 
@@ -238,13 +230,21 @@ test.describe('Task API', () => {
             expect(res.status()).toBe(200);
 
             const body = await res.json() as Task;
-            expect(body._id).toBe(tasks.doFirst._id);
             expect(body.text).toBe(update.text);
             expect(body.updatedAt).toBe(update.updatedAt.toISOString());
             expect(body.important).toBe(tasks.doFirst.important);
             expect(new Date(body.updatedAt).getTime()).toBeGreaterThan(
                 new Date(tasks.doFirst.updatedAt).getTime()
             );
+        });
+
+        test('should not change _id or createdAt', async ({ request }) => {
+            const update = { text: 'update', updatedAt: new Date() };
+            const res = await request.put(`${BASE_URL}/${tasks.doFirst._id}`, { data: update });
+            const body = await res.json() as Task;
+            await expect(res).toBeOK();
+            expect(body._id).toBe(tasks.doFirst._id);
+            expect(body.createdAt).toBe(tasks.doFirst.createdAt.toISOString());
         });
 
         test('should update important', async ({ request }) => {
@@ -280,8 +280,9 @@ test.describe('Task API', () => {
         });
 
         test('should return 400 when id is invalid', async ({ request }) => {
+            const invalidId = "invalid";
             const res = await request.put(
-                `${BASE_URL}/${"invalid"}`, 
+                `${BASE_URL}/${invalidId}`, 
                 { data: { text: 'update', updatedAt: new Date() } }
             );
             expect(res.status()).toBe(400);
@@ -316,5 +317,37 @@ test.describe('Task API', () => {
             expect(res.status()).toBe(400);
         });
 
+    });
+
+    test.describe("DELETE /api/tasks/:id", () => {
+        test.beforeEach(async () => {
+            tasks = await seedTasks();
+        });
+
+        test.afterEach(async () => {
+            await TaskModel.deleteMany({});
+        });
+
+        test('should return 204 on success', async ({request}) => {
+            const res = await request.delete(`${BASE_URL}/${tasks.doFirst._id}`);
+            await expect(res).toBeOK();
+            expect(res.status()).toBe(204);
+        });
+
+        test('should remove task from database', async ({ request }) => {
+            await request.delete(`${BASE_URL}/${tasks.doFirst._id}`);
+            const res = await request.get(`${BASE_URL}/${tasks.doFirst._id}`);
+            expect(res.status()).toBe(404);
+        });
+
+        test('should return 404 when id does not exist', async ({request}) => {
+            const res = await request.delete(`${BASE_URL}/${crypto.randomUUID()}`);
+            expect(res.status()).toBe(404);
+        });
+
+        test('should return 400 when id is not valid', async ({request}) => {
+            const res = await request.delete(`${BASE_URL}/${'invalid'}`);
+            expect(res.status()).toBe(400);
+        });
     });
 });
