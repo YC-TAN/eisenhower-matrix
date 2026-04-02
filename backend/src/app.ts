@@ -13,7 +13,7 @@ app.get('/', (_req: Request, res: Response<string>) => {
     res.send('Hello!');
 });
 
-app.use('/api/task', taskRouter);
+app.use('/api/tasks', taskRouter);
 
 app.use(unknownEndpoint);
 app.use(errorMiddleware);
