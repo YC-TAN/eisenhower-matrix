@@ -27,6 +27,7 @@ jobs:
       run: npm test
       env:
         MONGO_URI: mongodb://localhost:27017/todo-matrix-test
+        NODE_ENV: test
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
