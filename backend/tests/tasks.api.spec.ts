@@ -60,7 +60,7 @@ test.describe('Task API', () => {
                 await TaskModel.deleteMany({});
             });
 
-            test('should return all tasks when there are tasks', async ({ request }) => {
+            test('should return all tasks successfully', async ({ request }) => {
                 const res = await request.get(BASE_URL);
                 await expect(res).toBeOK();
                 expect(res.status()).toBe(200);
@@ -121,9 +121,93 @@ test.describe('Task API', () => {
             expect(res.status()).toBe(404);
         });
 
-        test('should return 400 when id is invalid', async({request}) => {
+        test('should return 400 for invalid id', async({request}) => {
             const invalidId = "invalid";
             const res = await request.get(`${BASE_URL}/${invalidId}`);
+            expect(res.status()).toBe(400);
+        });
+    });
+
+    test.describe('POST /api/tasks', () => {
+        test.afterAll(async () => {
+            await TaskModel.deleteMany({});
+        }); 
+
+        test.beforeEach(async () => {
+            await TaskModel.deleteMany({});
+        });
+
+        const newTask = {
+            _id: crypto.randomUUID(),
+            text: "create new task",
+            important: true,
+            urgent: false,
+            status: 'pending',
+            completedAt: null,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        };
+
+        test('should create new task', async ({request}) => {
+            const res = await request.post(BASE_URL, {data: newTask});
+
+            await expect(res).toBeOK();
+            expect(res.status()).toBe(201);
+
+            const body = await res.json() as Task;
+            expect(body).toHaveProperty('_id');
+            expect(body).toHaveProperty('text', newTask.text);
+            expect(body).toHaveProperty('status', newTask.status);
+            expect(body).toHaveProperty('urgent', newTask.urgent);
+            expect(body).toHaveProperty('important', newTask.important);
+            expect(body).toHaveProperty('createdAt', newTask.createdAt.toISOString());
+            expect(body).toHaveProperty('completedAt', newTask.completedAt);
+            expect(body).toHaveProperty('updatedAt', newTask.updatedAt.toISOString());
+        });
+
+        test('should return 400 when text is too short', async ({request}) => {
+            const text = "123";
+            const res = await request.post(BASE_URL, {data: {...newTask, text}});
+            expect(res.status()).toBe(400);
+        });
+
+        test('should return 400 when text is missing', async ({request}) => {
+            const { text, ...task} = newTask;
+            const res = await request.post(BASE_URL, {data: task});
+            expect(res.status()).toBe(400);
+        });
+
+        test('should return 400 when important is missing', async ({request}) => {
+            const { important, ...task} = newTask;
+            const res = await request.post(BASE_URL, {data: task});
+            expect(res.status()).toBe(400);
+        });
+
+        test('should return 400 when urgent is missing', async ({request}) => {
+            const { urgent, ...task} = newTask;
+            const res = await request.post(BASE_URL, {data: task});
+            expect(res.status()).toBe(400);
+        });
+
+        test('should return 400 when id is invalid', async ({request}) => {
+            const res = await request.post(BASE_URL, {data: {...newTask, _id: "invalid"}});
+            expect(res.status()).toBe(400);
+        });
+
+        test('should return 400 when status is invalid', async ({request}) => {
+            const res = await request.post(BASE_URL, {data: {...newTask, status: "invalid"}});
+            expect(res.status()).toBe(400);
+        });
+
+        test('should return 400 when createdAt is in the future', async ({ request }) => {
+            const future = new Date(Date.now() + 1000 * 60 * 60);
+            const res = await request.post(BASE_URL, { data: { ...newTask, createdAt: future } });
+            expect(res.status()).toBe(400);
+        });
+
+        test('should return 400 when updatedAt is in the future', async ({ request }) => {
+            const future = new Date(Date.now() + 1000 * 60 * 60);
+            const res = await request.post(BASE_URL, { data: { ...newTask, updatedAt: future } });
             expect(res.status()).toBe(400);
         });
     });
