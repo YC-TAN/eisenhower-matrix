@@ -15,7 +15,7 @@ export function createTaskData(overrides: Partial<Task> = {}): Task {
     text: 'Buy milk',
     important: false,
     urgent: false,
-    status: 'pending' as const,
+    status: 'pending',
     completedAt: null,
     createdAt: now,
     updatedAt: now,
