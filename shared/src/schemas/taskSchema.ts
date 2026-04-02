@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import { nonFutureDatetime } from '../utils/datetime';
+import { nonFutureDatetime } from '../utils/datetime.js';
 
 // -- Enums --
 export const TaskStatusSchema = z.enum(['pending', 'completed', 'deleted'])
