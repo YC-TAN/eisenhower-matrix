@@ -8,7 +8,7 @@
     "dev": "ts-node-dev src/index.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prestart": "npm run build --workspace=shared",
+    "prestart": "cd .. && npm run build --workspace=shared",
     "start": "npm run build && node build/backend/src/index.js",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
