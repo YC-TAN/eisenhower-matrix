@@ -69,16 +69,17 @@
   cursor: pointer;
 }
 
-.task-form-flag-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
 .task-form-preview {
   font-size: 12px;
   font-weight: 500;
   color: var(--color-text-hint);
   font-family: var(--font-mono);
   margin-left: auto;
+}
+
+.task-form-error {
+  margin: 0;
+  padding-left: 0.1rem;
+  font-size: 0.8125rem;
+  color: var(--color-danger);
 }
