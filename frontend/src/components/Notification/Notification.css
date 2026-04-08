@@ -1,0 +1,33 @@
+/* Base Style */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 16px;
+  padding-left: 28px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  background-color: white;
+  border-left: 6px solid #ccc;
+  font-family: sans-serif;
+  animation: slideIn 0.3s ease;
+}
+
+/* Success style */
+.notification.success {
+  border-left-color: #4caf50;
+  background-color: #f1f8e9;
+  color: #2e7d32;
+}
+
+/* Error style */
+.notification.error {
+  border-left-color: #f44336;
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}

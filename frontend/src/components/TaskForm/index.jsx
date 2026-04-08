@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { useTaskContext } from '../../context/UseTaskContext'
+import { useNotificationActions } from "../../stores/useNotification";
 import "./TaskForm.css";
 
 const TaskForm = () => {
@@ -8,6 +9,7 @@ const TaskForm = () => {
   const [text, setText] = useState("");
   const [important, setImportant] = useState(false);
   const [urgent, setUrgent] = useState(false);
+  const {setNotification} = useNotificationActions();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,6 +21,11 @@ const TaskForm = () => {
       urgent,
     });
 
+    setNotification({
+      message: `New Task '${text}' added`,
+      type: 'success'
+    })
+
     // Reset form
     setText("");
     setImportant(false);
@@ -27,6 +34,7 @@ const TaskForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="task-form">
+      <div>
       <div className="input-row">
         <input
           type="text"
@@ -38,6 +46,9 @@ const TaskForm = () => {
         <button type="submit" className="task-form-btn">
           Add
         </button>
+      </div>
+      <span className="error"></span>
+
       </div>
 
       <div className="task-form-flags">
