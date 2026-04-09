@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { useTaskContext } from "../../context/UseTaskContext";
 import { useNotificationActions } from "../../stores/useNotification";
+import { validateTaskText } from "../../utils/helpers";
 import "./TaskForm.css";
 
 const TaskForm = () => {
@@ -14,17 +15,11 @@ const TaskForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    const error = validateTaskText(text);
+    if (error) { setError(error); return; }
+
     const trimmed = text.trim();
-
-    if (!trimmed) {
-      setError("Task text is required.");
-      return;
-    } // Don't add empty tasks
-
-    if (trimmed.length < 4) {
-      setError("Task must be at least 4 characters long");
-      return;
-    }
 
     addTask({
       text: trimmed,
@@ -33,7 +28,7 @@ const TaskForm = () => {
     });
 
     setNotification({
-      message: `New Task '${text}' added`,
+      message: `New Task '${trimmed}' added`,
       type: "success",
     });
 
