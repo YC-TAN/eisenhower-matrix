@@ -95,16 +95,6 @@
   background: rgba(0,0,0,0.06);
 }
 
-.task-item-text--struck {
-  text-decoration: line-through;
-  cursor: default;
-  pointer-events: none; /*disable tooltip */
-}
-
-.task-item-text--struck:hover {
-  background: transparent;
-}
-
 .task-item-date {
   font-size: 11px;
   font-family: var(--font-mono);
@@ -113,22 +103,20 @@
   padding-left: 3px;
 }
 
-/* ── Edit input ── */
-.task-item-edit-input {
-  font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 500;
-  color: currentColor;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid currentColor;
-  border-radius: 4px;
-  padding: 4px 8px;
-  outline: none;
-  width: 100%;
-}
-
 .task-item--editing {
   padding: 6px 0;
+  flex-direction: column;
+}
+
+/* ── Completed task ── */
+.struck {
+  text-decoration: line-through;
+  cursor: default;
+  pointer-events: none; /*disable tooltip */
+}
+
+.struck:hover {
+  background: transparent;
 }
 
 /* ── Undo row ── */
@@ -141,13 +129,6 @@
   margin-top: 1px;
   animation: task-slide-in 0.15s ease-out;
 }
-/* 
-.task-item-undo-label {
-  font-size: 11px;
-  font-family: var(--font-mono);
-  color: currentColor;
-  opacity: 0.6;
-} */
 
 .task-item-undo {
   font-family: var(--font-sans);
