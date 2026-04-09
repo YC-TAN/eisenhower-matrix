@@ -31,15 +31,17 @@ import { useState, useEffect } from 'react';
  * const { tasks, pendingTasks, addTask } = useTasks(initialTasks);
  * addTask({ text: 'Fix bug', important: true, urgent: true });
  */
+
+const TASKS_STORAGE_KEY = 'matrix_tasks';
 export const useTasks = (initialData=[]) => {
 
     const [tasks, setTasks] = useState(() => {
-        const saved = localStorage.getItem('matrix_tasks');
+        const saved = localStorage.getItem(TASKS_STORAGE_KEY);
         return saved ? JSON.parse(saved) : initialData;
     });
 
     useEffect(() => {
-        localStorage.setItem('matrix_tasks', JSON.stringify(tasks));
+        localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasks));
     }, [tasks]);
 
     //--CRUD Operations
