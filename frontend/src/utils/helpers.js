@@ -12,3 +12,10 @@ export function formatDate(isoString) {
     year: 'numeric',
   })
 }
+
+export function validateTaskText(text) {
+  const trimmed = text.trim();
+  if (!trimmed) return 'Task text is required.';
+  if (trimmed.length > 200) return 'Task cannot be longer than 200 characters.';
+  return '';
+}
