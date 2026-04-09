@@ -1,7 +1,8 @@
 import { useState } from "react";
 
-import { useTaskContext } from '../../context/UseTaskContext'
+import { useTaskContext } from "../../context/UseTaskContext";
 import { useNotificationActions } from "../../stores/useNotification";
+import { validateTaskText } from "../../utils/helpers";
 import "./TaskForm.css";
 
 const TaskForm = () => {
@@ -9,47 +10,67 @@ const TaskForm = () => {
   const [text, setText] = useState("");
   const [important, setImportant] = useState(false);
   const [urgent, setUrgent] = useState(false);
-  const {setNotification} = useNotificationActions();
+  const [error, setError] = useState("");
+  const { setNotification } = useNotificationActions();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!text.trim()) return; // Don't add empty tasks
+    
+    const error = validateTaskText(text);
+    if (error) { setError(error); return; }
+
+    const trimmed = text.trim();
 
     addTask({
-      text,
+      text: trimmed,
       important,
       urgent,
     });
 
     setNotification({
-      message: `New Task '${text}' added`,
-      type: 'success'
-    })
+      message: `New Task '${trimmed}' added`,
+      type: "success",
+    });
 
     // Reset form
     setText("");
     setImportant(false);
     setUrgent(false);
+    setError("");
+  };
+
+  const handleTextChange = (e) => {
+    setText(e.target.value);
+    if (error) setError(""); // remove error message if present
   };
 
   return (
-    <form onSubmit={handleSubmit} className="task-form">
-      <div>
+    <form onSubmit={handleSubmit} className="task-form" noValidate>
       <div className="input-row">
         <input
           type="text"
           placeholder="What needs to be done?"
           value={text}
+          minLength={4}
           maxLength={200}
-          onChange={(e) => setText(e.target.value)}
+          onChange={handleTextChange}
+          aria-invalid={error ? "true" : "false"} // active when there is error
+          aria-describedby={error ? "input-error" : undefined} // point to the error message id
         />
         <button type="submit" className="task-form-btn">
           Add
         </button>
       </div>
-      <span className="error"></span>
-
-      </div>
+      {error && (
+        <p 
+          className="task-form-error"
+          id="input-error"
+          role='alert' // announce error on screen reader
+          aria-live="polite"
+        >
+          {error}
+        </p>
+      )}
 
       <div className="task-form-flags">
         <label className="task-form-flag">
