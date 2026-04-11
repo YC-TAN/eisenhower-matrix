@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-export const TaskContext = createContext(null)
+export const TaskContext = createContext()
 
 export const useTaskContext = () => {
   const context = useContext(TaskContext);
