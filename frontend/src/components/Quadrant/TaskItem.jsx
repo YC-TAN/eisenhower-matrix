@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
-import { useTaskContext } from "../../context/UseTaskContext";
+import { useTaskContext } from "../../context/useTaskContext";
 import { formatDate } from "../../utils/helpers";
 import TaskEditForm from "./TaskEditForm";
 import "./TaskItem.css";
@@ -17,7 +17,6 @@ export default function TaskItem({
 
   // States
   const [pendingAction, setPendingAction] = useState(null); // 'completing' | 'deleting' | null
-  // const [isEditing, setIsEditing] = useState(false);
   const timerRef = useRef(null);
 
   // Boolean helper to disable buttons
