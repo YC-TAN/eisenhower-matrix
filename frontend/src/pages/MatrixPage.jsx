@@ -1,7 +1,7 @@
 import TaskForm from "../components/TaskForm";
 import Quadrant from "../components/Quadrant";
 import { QUADRANTS } from "../constants/matrixConfig";
-import { useTaskContext } from "../context/UseTaskContext";
+import { useTaskContext } from "../context/useTaskContext";
 import "./MatrixPage.css";
 
 export default function MatrixPage() {
