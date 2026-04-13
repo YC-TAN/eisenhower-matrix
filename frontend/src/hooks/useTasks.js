@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 
 /**
- * useTasks Hook
+ * useTasks Hook (Pure Logic)
  * 
  * Manages task state with localStorage persistence.
  * Handles CRUD operations and provides filtered task groupings for the Eisenhower Matrix.
+ * Decoupled from the UI and Context so it can be used independently 
  * 
  * @param {Array} initialData - Initial tasks to load on first run (default: empty array)
  * 
@@ -32,7 +33,7 @@ import { useState, useEffect } from 'react';
  * addTask({ text: 'Fix bug', important: true, urgent: true });
  */
 
-const TASKS_LS_KEY = 'matrix_tasks';
+export const TASKS_LS_KEY = 'matrix_tasks';
 
 export const useTasks = (initialData=[]) => {
 
