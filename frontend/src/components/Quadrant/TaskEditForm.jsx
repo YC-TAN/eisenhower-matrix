@@ -44,9 +44,11 @@ const TaskEditForm = ({ initialText, onSave, onCancel }) => {
         onChange={handleChange}
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
-        title="ESC to cancel edit"
       />
-      {error && <span className="error">{error}</span>}
+      {error 
+        ? <span className="error">{error}</span>
+        : <span className="info">Press the <kbd>Esc</kbd> or <kbd>Tab</kbd> key to cancel editing</span>
+      }
     </>
   );
 };
