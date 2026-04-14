@@ -1,12 +1,10 @@
-import {useState} from 'react'
-
 import "./Quadrant.css";
 import TaskItem from "./TaskItem";
 
-const Quadrant = ({ config, tasks }) => {
+const Quadrant = ({ config, tasks, editingTaskId, onEdit, onCancelEdit }) => {
   const { label, action, cssVarBg, cssVarBorder, cssVarText } = config;
   // To track which tesk is being edited, one task at a time
-  const [editingId, setEditingId] = useState(null);
+  // const [editingId, setEditingId] = useState(null);
 
   return (
     <div
@@ -37,9 +35,9 @@ const Quadrant = ({ config, tasks }) => {
             <TaskItem
               key={task.id}
               task={task}
-              isEditing={editingId === task.id}
-              onEdit={() => setEditingId(task.id)}
-              onCancelEdit={() => setEditingId(null)}
+              isEditing={editingTaskId === task.id}
+              onEdit={onEdit}
+              onCancelEdit={onCancelEdit}
             />
           ))}
         </ul>

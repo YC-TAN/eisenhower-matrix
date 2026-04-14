@@ -1,11 +1,14 @@
+import {useState} from 'react'
+
 import TaskForm from "../components/TaskForm";
 import Quadrant from "../components/Quadrant";
 import { QUADRANTS } from "../constants/matrixConfig";
-import { useTaskContext } from "../context/UseTaskContext";
+import { useTaskContext } from "../context/useTaskContext";
 import "./MatrixPage.css";
 
 export default function MatrixPage() {
   const { pendingTasks } = useTaskContext();
+  const [editingTaskId, setEditingTaskId] = useState(null);
 
   return (
     <div className="matrix-page">
@@ -16,7 +19,7 @@ export default function MatrixPage() {
         </p>
       </div>
 
-      <TaskForm />
+      <TaskForm onFocus={() => setEditingTaskId(null)} />
 
       <div className="matrix-grid">
         {QUADRANTS.map((config) => {
@@ -29,6 +32,9 @@ export default function MatrixPage() {
               key={config.id}
               config={config}
               tasks={filtered}
+              editingTaskId={editingTaskId}
+              onEdit={(id) => setEditingTaskId(id)}
+              onCancelEdit={() => setEditingTaskId(null)}
             />
           );
         })}

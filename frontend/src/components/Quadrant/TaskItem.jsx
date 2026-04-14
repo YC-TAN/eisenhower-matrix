@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
-import { useTaskContext } from "../../context/UseTaskContext";
+import { useTaskContext } from "../../context/useTaskContext";
 import { formatDate } from "../../utils/helpers";
 import TaskEditForm from "./TaskEditForm";
 import "./TaskItem.css";
@@ -17,7 +17,6 @@ export default function TaskItem({
 
   // States
   const [pendingAction, setPendingAction] = useState(null); // 'completing' | 'deleting' | null
-  // const [isEditing, setIsEditing] = useState(false);
   const timerRef = useRef(null);
 
   // Boolean helper to disable buttons
@@ -66,7 +65,7 @@ export default function TaskItem({
       <div className="task-item-body">
         <span 
         className={`task-item-text ${isBusy? "struck" : ""}`} 
-        onClick={() => !isBusy && onEdit()}>
+        onClick={() => !isBusy && onEdit(task.id)}>
           <span className="task-item-date">
             {formatDate(task.createdAt)}
           </span>

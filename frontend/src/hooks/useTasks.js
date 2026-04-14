@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 
 /**
- * useTasks Hook
+ * useTasks Hook (Pure Logic)
  * 
  * Manages task state with localStorage persistence.
  * Handles CRUD operations and provides filtered task groupings for the Eisenhower Matrix.
+ * Decoupled from the UI and Context so it can be used independently 
  * 
  * @param {Array} initialData - Initial tasks to load on first run (default: empty array)
  * 
  * @returns {Object} Task state management object
  * @returns {Array} tasks - All tasks (flattened)
- * @returns {Object} groupedTasks - Tasks grouped by quadrant (q1, q2, q3, q4)
  * @returns {Array} pendingTasks - Only tasks with status='pending'
  * @returns {Function} addTask - Add a new task
  * @returns {Function} updateTask - Update an existing task
@@ -24,6 +24,7 @@ import { useState, useEffect } from 'react';
  *   urgent: boolean,
  *   status: 'pending' | 'completed' | 'deleted',
  *   createdAt: ISO string,
+ *   updatedAt: ISO string,
  *   completedAt: ISO string | null
  * }
  * 
@@ -31,15 +32,18 @@ import { useState, useEffect } from 'react';
  * const { tasks, pendingTasks, addTask } = useTasks(initialTasks);
  * addTask({ text: 'Fix bug', important: true, urgent: true });
  */
+
+export const TASKS_LS_KEY = 'matrix_tasks';
+
 export const useTasks = (initialData=[]) => {
 
     const [tasks, setTasks] = useState(() => {
-        const saved = localStorage.getItem('matrix_tasks');
+        const saved = localStorage.getItem(TASKS_LS_KEY);
         return saved ? JSON.parse(saved) : initialData;
     });
 
     useEffect(() => {
-        localStorage.setItem('matrix_tasks', JSON.stringify(tasks));
+        localStorage.setItem(TASKS_LS_KEY, JSON.stringify(tasks));
     }, [tasks]);
 
     //--CRUD Operations
@@ -53,13 +57,16 @@ export const useTasks = (initialData=[]) => {
      */
     const addTask = (taskObj) => {
         const {text, important, urgent} = taskObj;
+        if (!text.trim()) return;
+        const timestamp = new Date().toISOString();
         const newTask = {
             id: crypto.randomUUID(),
             text, 
             urgent,
             important,
             status: 'pending', // 'pending' | 'completed' | 'deleted'
-            createdAt: new Date().toISOString(),
+            createdAt: timestamp,
+            updatedAt: timestamp,
             completedAt: null
         }
         setTasks((prev) => [...prev, newTask]);
@@ -75,15 +82,16 @@ export const useTasks = (initialData=[]) => {
             prev.map((t) => {
                 if (t.id === id) {
                     let completedAt = t.completedAt;
+                    const timestamp = new Date().toISOString();
 
                     // Handle the timestamp based on the new status
                     if (updates.status === 'completed') {
-                        completedAt = new Date().toISOString();
+                        completedAt = timestamp;
                     } else if (updates.status === 'pending') {
                         completedAt = null; // Clear it if moving back to pending
                     }
 
-                    return { ...t, ...updates, completedAt };
+                    return { ...t, ...updates, updatedAt: timestamp, completedAt };
                 }
                 return t;
             })

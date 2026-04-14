@@ -18,3 +18,10 @@
   font-size: 11px;
   color: var(--color-danger);
 }
+
+.info {
+  margin: 0;
+  padding-left: 0.1rem;
+  font-size: 11px;
+  color: var( --color-text-hint);
+}
