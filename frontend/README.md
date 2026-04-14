@@ -2,7 +2,7 @@
 
 A minimal task management PWA based on the Eisenhower Matrix, organize tasks by urgency and importance. Works offline and is installable as a PWA.
 
-![Eisenhower Matrix App](./docs/screenshot.png)
+![Eisenhower Matrix App](./public/screenshot.png)
 
 👉 [Live demo](https://yc-tan.github.io/eisenhower-matrix/)
 
