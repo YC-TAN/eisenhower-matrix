@@ -1,4 +1,3 @@
-// integration test
 import { render, screen } from '../../../testSetup';
 import { TASKS_LS_KEY } from '../../hooks/useTasks';
 import Quadrant from './index';
