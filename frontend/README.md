@@ -2,9 +2,9 @@
 
 A minimal task management PWA based on the Eisenhower Matrix, organize tasks by urgency and importance. Works offline and is installable as a PWA.
 
-![Eisenhower Matrix App](./public/screenshot.png)
-
 👉 [Live demo](https://yc-tan.github.io/eisenhower-matrix/)
+
+![Eisenhower Matrix App](./public/screenshot.png)
 
 ---
 
@@ -148,4 +148,3 @@ Tests use Vitest + React Testing Library. Integration tests wrap components in t
 - [ ] Drag and drop between quadrants (dnd-kit)
 - [ ] Sortable within quadrant
 - [ ] PWA update prompt
-- [ ] CI/CD pipelines 
