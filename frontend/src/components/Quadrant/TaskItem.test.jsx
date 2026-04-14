@@ -35,17 +35,6 @@ function getStored() {
 }
 
 describe('TaskItem', () => {
-  // let user;
-
-  // beforeEach(() => {
-  //   vi.useFakeTimers();
-  //   user = userEvent.setup({ advanceTimers: (ms) => vi.advanceTimersByTime(ms) });
-  // });
-
-  // afterEach(() => {
-  //   vi.runOnlyPendingTimers();
-  //   vi.useRealTimers();
-  // });
 
   it('should render the task text', () => {
     renderItem();
