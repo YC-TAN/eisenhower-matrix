@@ -65,7 +65,7 @@ export default function TaskItem({
       <div className="task-item-body">
         <span 
         className={`task-item-text ${isBusy? "struck" : ""}`} 
-        onClick={() => !isBusy && onEdit()}>
+        onClick={() => !isBusy && onEdit(task.id)}>
           <span className="task-item-date">
             {formatDate(task.createdAt)}
           </span>
