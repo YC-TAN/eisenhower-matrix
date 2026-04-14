@@ -24,13 +24,23 @@ const TaskEditForm = ({ initialText, onSave, onCancel }) => {
     if (!err) {
       onSave(text.trim());
     } else {
-      setError(err);
+      onCancel();
     }
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") handleBlur();
-    if (e.key === "Escape") onCancel();
+    if (e.key === 'Escape') {
+      onCancel();
+      return;
+    }
+    if (e.key === 'Enter') {
+      const err = validateTaskText(text);
+      if (err) {
+        setError(err);
+        return;
+      }
+      onSave(text.trim());
+    }
   };
 
   return (
@@ -47,7 +57,7 @@ const TaskEditForm = ({ initialText, onSave, onCancel }) => {
       />
       {error 
         ? <span className="error">{error}</span>
-        : <span className="info">Press the <kbd>Esc</kbd> or <kbd>Tab</kbd> key to cancel editing</span>
+        : <span className="info">Press <kbd>Enter</kbd> key to save, <kbd>Esc</kbd> key to cancel editing</span>
       }
     </>
   );
