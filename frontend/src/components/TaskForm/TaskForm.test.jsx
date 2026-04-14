@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
-import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { render } from '../../../testSetup';
+
+import { screen, waitFor, render } from '../../../testSetup';
 import TaskForm from './index.jsx';
 import { TASKS_LS_KEY } from '../../hooks/useTasks';
 
