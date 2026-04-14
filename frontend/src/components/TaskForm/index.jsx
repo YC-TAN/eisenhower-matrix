@@ -5,7 +5,7 @@ import { useNotificationActions } from "../../stores/useNotification";
 import { validateTaskText } from "../../utils/helpers";
 import "./TaskForm.css";
 
-const TaskForm = () => {
+const TaskForm = ({ onFocus }) => {
   const { addTask } = useTaskContext();
   const [text, setText] = useState("");
   const [important, setImportant] = useState(false);
@@ -15,9 +15,12 @@ const TaskForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const error = validateTaskText(text);
-    if (error) { setError(error); return; }
+    if (error) {
+      setError(error);
+      return;
+    }
 
     const trimmed = text.trim();
 
@@ -45,7 +48,12 @@ const TaskForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="task-form" noValidate>
+    <form
+      onSubmit={handleSubmit}
+      onFocus={onFocus}
+      className="task-form"
+      noValidate
+    >
       <div className="input-row">
         <input
           type="text"
@@ -62,10 +70,10 @@ const TaskForm = () => {
         </button>
       </div>
       {error && (
-        <p 
+        <p
           className="task-form-error"
           id="input-error"
-          role='alert' // announce error on screen reader
+          role="alert" // announce error on screen reader
           aria-live="polite"
         >
           {error}
