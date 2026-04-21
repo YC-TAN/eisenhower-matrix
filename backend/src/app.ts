@@ -1,8 +1,8 @@
-import express, {Request, Response} from 'express';
+import express, {type Request, type Response} from 'express';
 
-import taskRouter from './routes/taskRoutes';
-import { logger } from './utils/logger';
-import { errorMiddleware, unknownEndpoint } from './middleware/errorHandler';
+import taskRouter from './routes/taskRoutes.js';
+import { logger } from './utils/logger.js';
+import { errorMiddleware, unknownEndpoint } from './middleware/errorHandler.js';
 
 const app = express();
 

@@ -1,6 +1,6 @@
-import { taskRepository } from '../repositories/taskRepository';
-import { Task, UpdateTask } from '@todo-matrix/shared';
-import { NotFoundError } from '../utils/errors';
+import { taskRepository } from '../repositories/taskRepository.js';
+import type { Task, UpdateTask } from '@todo-matrix/shared';
+import { NotFoundError } from '../utils/errors.js';
 
 export const taskService = {
   getAllTasks: async (): Promise<Task[]> => {

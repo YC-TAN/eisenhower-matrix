@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { Task, TaskStatusSchema } from '@todo-matrix/shared';
+import { type Task, TaskStatusSchema } from '@todo-matrix/shared';
 
 const TaskSchema = new Schema<Task>({
   // UUID will be generated at frontend to support offline
