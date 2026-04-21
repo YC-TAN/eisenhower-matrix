@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Zod schemas, shared by frontend and backend",
   "main": "./dist/index.js",
-  "types": "./src/index.ts",
+  "types": "./dist/index.js",
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch"
