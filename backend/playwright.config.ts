@@ -32,7 +32,7 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
 
-  globalSetup: './tests/globalSetup',
+  globalSetup: './tests/globalSetup.ts',
 
   /* Configure projects for major browsers */
   // projects: [
