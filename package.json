@@ -9,9 +9,9 @@
     "frontendTS"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace=shared & npm run dev --workspace=backend & npm run dev --workspace=frontendTS",
-    "build": "npm run build --workspace=shared && npm run build --workspace=backend && npm run build --workspace=frontendTS",
-    "start": "npm run build && node build/backend/src/index.js"
+    "dev": "npm run build -w @todo-matrix/shared && concurrently -n shared,backend,frontend -c cyan,green,blue \"npm run dev -w @todo-matrix/shared\" \"npm run dev -w backend\" \"npm run dev -w frontendTS\"",
+    "build": "npm run build -w @todo-matrix/shared && npm run build -w backend && npm run build -w frontendTS",
+    "start": "npm run build && node backend/dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/YC-TAN/eisenhower-matrix/issues"
   },
-  "homepage": "https://github.com/YC-TAN/eisenhower-matrix#readme"
+  "homepage": "https://github.com/YC-TAN/eisenhower-matrix#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
 }
