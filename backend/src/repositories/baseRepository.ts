@@ -1,4 +1,4 @@
-import { Model, QueryFilter } from 'mongoose';
+import type { Model, QueryFilter } from 'mongoose';
 
 export class BaseRepository<T> {
   // Note: lean() bypasses virtuals, getters/setters and defaults

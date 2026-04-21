@@ -1,6 +1,6 @@
-import { BaseRepository } from './baseRepository';
-import TaskModel from '../models/taskModel';
-import { Task } from '@todo-matrix/shared';
+import { BaseRepository } from './baseRepository.js';
+import TaskModel from '../models/taskModel.js';
+import type { Task } from '@todo-matrix/shared';
 
 class TaskRepository extends BaseRepository<Task> {
   constructor() {

@@ -1,4 +1,4 @@
-import { Task } from "@todo-matrix/shared";
+import type { Task } from "@todo-matrix/shared";
 import TaskModel from '../src/models/taskModel';
 
 export interface SeedTasks {

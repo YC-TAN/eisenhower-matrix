@@ -1,8 +1,8 @@
-import { Response, Request, NextFunction } from "express";
+import type { Response, Request, NextFunction } from "express";
 import {z} from 'zod';
-import { logger, toError } from "../utils/logger";
-import { NotFoundError } from "../utils/errors";
-import { ErrorResponse } from "../types/api";
+import { logger, toError } from "../utils/logger.js";
+import { NotFoundError } from "../utils/errors.js";
+import type { ErrorResponse } from "../types/api.js";
 
 export const unknownEndpoint = (_req: Request, res: Response<ErrorResponse>) => {
     res.status(404).send({ error: 'unknown endpoint' });

@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 import mongoose from 'mongoose';
 
-import TaskModel from '../src/models/taskModel';
-import { Task } from '@todo-matrix/shared';
-import { seedTasks, SeedTasks, createTaskData } from './helper';
+import TaskModel from '../src/models/taskModel.ts';
+import type { Task } from '@todo-matrix/shared';
+import { seedTasks, type SeedTasks, createTaskData } from './helper.ts';
 
 test.describe('Task API', () => {
 

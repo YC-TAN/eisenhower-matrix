@@ -1,14 +1,14 @@
-import { Router, Request, Response } from 'express';
+import { Router, type Request, type Response } from 'express';
 
-import { taskService } from '../services/taskService';
+import { taskService } from '../services/taskService.js';
 import { 
-  Task, 
+  type Task, 
   UpdateTaskSchema, 
   TaskSchema, 
   TaskIdParamSchema, 
-  TaskIdParam 
+  type TaskIdParam 
 } from '@todo-matrix/shared';
-import { ErrorResponse } from '../types/api';
+import type { ErrorResponse } from '../types/api.js';
 
 const router = Router();
 

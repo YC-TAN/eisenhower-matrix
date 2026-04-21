@@ -1,7 +1,7 @@
-import { env } from './config/env';
-import { logger, toError } from "./utils/logger";
-import { connectDB } from './config/db';
-import app from './app';
+import { env } from './config/env.js';
+import { logger, toError } from "./utils/logger.js";
+import { connectDB } from './config/db.js';
+import app from './app.js';
 
 const start = async (): Promise<void> => {
   try {

@@ -2,19 +2,19 @@
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
-    "rootDir": "../",
-    "outDir": "./build",
-    "baseUrl": ".", 
+    // "rootDir": "../",
+    // "outDir": "./build",
+    // "baseUrl": ".", 
     "paths": {
       "@todo-matrix/shared": ["../shared/src/index.ts"]
     },
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "CommonJS",
-    "moduleResolution": "Node",
-    "target": "ES6",
+    "module": "nodenext",
+    "target": "ESnext",
     "types": ["node"],
+    "moduleResolution": "NodeNext",
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -39,13 +39,15 @@
 
     // Recommended Options
     "strict": true,
+    "noEmit": true,
     // "jsx": "react-jsx",
     // "verbatimModuleSyntax": true,
     // "isolatedModules": true,
     // "noUncheckedSideEffectImports": true,
     // "moduleDetection": "force",
     // "skipLibCheck": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    // "allowImportingTsExtensions": true,
   },
    "include": ["src/**/*.ts"],
    "exclude": ["tests", "playwright.config.ts"]
